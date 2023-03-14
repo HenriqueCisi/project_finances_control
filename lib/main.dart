@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_finances_control/models/transaction.dart';
+import 'package:intl/intl.dart';
 
 main() => runApp(const ExpensesAPP());
 
@@ -45,7 +46,6 @@ class MyHomePage extends StatelessWidget {
               children: _transactions.map((tr) {
                 return Card(
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
                           margin: const EdgeInsets.symmetric(
@@ -68,7 +68,7 @@ class MyHomePage extends StatelessWidget {
                           Text(tr.title,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                          Text(tr.date.toString(),
+                          Text(DateFormat('d MMM y').format(tr.date),
                               style:
                                   const TextStyle(fontWeight: FontWeight.w200)),
                         ]),
