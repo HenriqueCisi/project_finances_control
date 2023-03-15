@@ -3,13 +3,29 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:project_finances_control/models/transaction.dart';
 
-class TransactionForm extends StatelessWidget {
+class TransactionForm extends StatefulWidget {
+  final void Function(String, double) addTransaction;
+
+  const TransactionForm(this.addTransaction, {super.key});
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
   final valueController = TextEditingController();
 
-  final void Function(String, double) addTransaction;
+  _submitForm() {
+    final title = titleController.text;
+    final value = double.tryParse(valueController.text.toString()) ?? 0;
 
-  TransactionForm(this.addTransaction, {super.key});
+    if (title.isEmpty || value <= 0) {
+      return;
+    }
+
+    widget.addTransaction(title, value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +37,19 @@ class TransactionForm extends StatelessWidget {
           TextField(
             decoration: const InputDecoration(labelText: 'Título'),
             controller: titleController,
+            onSubmitted: (_) =>{
+              _submitForm()
+            },
+            autofocus: true,
           ),
           TextField(
             decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             controller: valueController,
+            onSubmitted: (_) => {
+              _submitForm()
+            },
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            autofocus: true,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -34,10 +59,7 @@ class TransactionForm extends StatelessWidget {
                       backgroundColor:
                           MaterialStatePropertyAll<Color>(Colors.purple)),
                   onPressed: () {
-                    final title = titleController.text;
-                    final value = double.tryParse(valueController.text.toString()) ?? 0;
-
-                    addTransaction(title, value);
+                    _submitForm();
                   },
                   child: const Text(
                     'Nova Transação',
