@@ -6,14 +6,34 @@ import 'package:project_finances_control/components/transaction_form.dart';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
-main() => runApp(const ExpensesAPP());
+main() => runApp(ExpensesAPP());
 
 class ExpensesAPP extends StatelessWidget {
-  const ExpensesAPP({super.key});
+  final ThemeData ourTheme = ThemeData();
+
+  ExpensesAPP({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MyHomePage());
+    return MaterialApp(
+        home: const MyHomePage(),
+        theme: ourTheme.copyWith(
+            colorScheme: ourTheme.colorScheme.copyWith(
+                  primary: Colors.purple, 
+                  secondary: Colors.amber),
+            textTheme: ourTheme.textTheme.copyWith(
+                titleLarge: const TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
+
+            appBarTheme: const AppBarTheme(
+                titleTextStyle: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold))
+                ));
   }
 }
 
@@ -38,8 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (_) {
           return TransactionForm(_addNewTransaction);
-        }
-        );
+        });
   }
 
   void _addNewTransaction(String title, double value) {

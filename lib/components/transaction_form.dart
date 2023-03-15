@@ -37,17 +37,13 @@ class _TransactionFormState extends State<TransactionForm> {
           TextField(
             decoration: const InputDecoration(labelText: 'Título'),
             controller: titleController,
-            onSubmitted: (_) =>{
-              _submitForm()
-            },
+            onSubmitted: (_) => {_submitForm()},
             autofocus: true,
           ),
           TextField(
             decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             controller: valueController,
-            onSubmitted: (_) => {
-              _submitForm()
-            },
+            onSubmitted: (_) => {_submitForm()},
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             autofocus: true,
           ),
@@ -55,16 +51,10 @@ class _TransactionFormState extends State<TransactionForm> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                  style: const ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll<Color>(Colors.purple)),
                   onPressed: () {
                     _submitForm();
                   },
-                  child: const Text(
-                    'Nova Transação',
-                    style: TextStyle(color: Colors.white),
-                  ))
+                  child: const Text('Nova Transação'))
             ],
           )
         ]),
