@@ -44,12 +44,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //     id: 't1', title: 'Conta de Água', value: 50.00, date: DateTime.now()),
-    // Transaction(
-    //     id: 't2', title: 'Conta de Luz', value: 55.00, date: DateTime.now()),
-    // Transaction(id: 't3', title: 'Prime', value: 14.90, date: DateTime.now()),
+    Transaction(
+        id: 't0',
+        title: 'Conta Antiga',
+        value: 50.00,
+        date: DateTime.now().subtract(const Duration(days: 33))),
+    Transaction(
+        id: 't1',
+        title: 'Conta de Luz',
+        value: 55.00,
+        date: DateTime.now().subtract(const Duration(days: 2))),
+    Transaction(
+      id: 't2',
+      title: 'Prime',
+      value: 14.90,
+      date: DateTime.now().subtract(const Duration(days: 3))),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7))) ? true : false ;
+    }).toList();
+  }
 
   _openTransactionModal(BuildContext context) {
     showModalBottomSheet(
@@ -89,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // Chart(),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
