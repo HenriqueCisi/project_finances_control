@@ -4,7 +4,8 @@ import 'package:project_finances_control/models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  const TransactionList(this.transactions, {super.key});
+  final void Function(String) delete;
+   const TransactionList(this.transactions, this.delete, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class TransactionList extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
+                SizedBox(
                   height: 200,
                   child: Image.asset(
                     'assets/images/waiting.png',
@@ -36,10 +37,8 @@ class TransactionList extends StatelessWidget {
                 final tr = transactions[index];
                 return Card(
                   elevation: 5,
-                  margin: const  EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5
-                  ),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   child: ListTile(
                     leading: CircleAvatar(
                         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -59,6 +58,8 @@ class TransactionList extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     subtitle: Text(DateFormat('d MMM y').format(tr.date)),
+                    trailing:  IconButton(icon: const Icon(Icons.delete), onPressed: (){delete(tr.id);}),
+                    
                   ),
                 );
               },

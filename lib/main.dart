@@ -43,33 +43,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-        id: 't0',
-        title: 'Conta Antiga',
-        value: 50.00,
-        date: DateTime.now().subtract(const Duration(days: 33))),
-    Transaction(
-        id: 't1',
-        title: 'Conta de Luz',
-        value: 55.00,
-        date: DateTime.now().subtract(const Duration(days: 2))),
-    Transaction(
-        id: 't2',
-        title: 'Prime',
-        value: 14.90,
-        date: DateTime.now().subtract(const Duration(days: 3))),
-    Transaction(
-        id: 't3',
-        title: 'Cartão de crédito',
-        value: 100000.90,
-        date: DateTime.now()),
-    Transaction(
-        id: 't4',
-        title: 'Cervejinha',
-        value: 50,
-        date: DateTime.now()),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
@@ -85,18 +59,27 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _addNewTransaction(String title, double value) {
+  void _addNewTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: DateTime.now());
+        date: date
+        );
 
     setState(() {
       _transactions.add(newTransaction);
     });
 
     Navigator.of(context).pop();
+  }
+
+    void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) {
+       return tr.id == id;
+      });
+    });
   }
 
   @override
@@ -112,11 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _deleteTransaction),
           ],
         ),
       ),
