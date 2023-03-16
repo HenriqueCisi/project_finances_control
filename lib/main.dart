@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:project_finances_control/components/chart.dart';
 import 'package:project_finances_control/components/transaction_form.dart';
 
 import 'components/transaction_list.dart';
@@ -18,22 +19,19 @@ class ExpensesAPP extends StatelessWidget {
     return MaterialApp(
         home: const MyHomePage(),
         theme: ourTheme.copyWith(
-            colorScheme: ourTheme.colorScheme.copyWith(
-                  primary: Colors.purple, 
-                  secondary: Colors.amber),
+            colorScheme: ourTheme.colorScheme
+                .copyWith(primary: Colors.purple, secondary: Colors.amber),
             textTheme: ourTheme.textTheme.copyWith(
                 titleLarge: const TextStyle(
-                    fontFamily: 'OpenSans',
+                    fontFamily: 'Quicksand',
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
-
             appBarTheme: const AppBarTheme(
                 titleTextStyle: TextStyle(
-                    fontFamily: 'OpenSans',
+                    fontFamily: 'Quicksand',
                     fontSize: 20,
-                    fontWeight: FontWeight.bold))
-                ));
+                    fontWeight: FontWeight.bold))));
   }
 }
 
@@ -45,12 +43,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
+  final List<Transaction> _transactions = [
     // Transaction(
     //     id: 't1', title: 'Conta de Água', value: 50.00, date: DateTime.now()),
     // Transaction(
     //     id: 't2', title: 'Conta de Luz', value: 55.00, date: DateTime.now()),
-    Transaction(id: 't3', title: 'Prime', value: 14.90, date: DateTime.now()),
+    // Transaction(id: 't3', title: 'Prime', value: 14.90, date: DateTime.now()),
   ];
 
   _openTransactionModal(BuildContext context) {
@@ -91,10 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Card(
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+            // Chart(),
             TransactionList(_transactions),
           ],
         ),

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:project_finances_control/models/transaction.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) addTransaction;
