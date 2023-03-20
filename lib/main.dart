@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_finances_control/components/adaptative_scaffold.dart';
 import 'package:project_finances_control/components/chart.dart';
 import 'package:project_finances_control/components/transaction_form.dart';
 
@@ -139,29 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    return Platform.isIOS
-        ? CupertinoPageScaffold(
-            navigationBar: CupertinoNavigationBar(
-              middle: const Text('Despesas Pessoais'),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: actions,
-              ),
-            ),
-            child: bodyPage,
-          )
-        : Scaffold(
-            appBar: appBar,
-            body: bodyPage,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    child: const Icon(Icons.add),
-                    onPressed: () => _openTransactionModal(context),
-                  ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
+    return AdaptativeScaffold(actions, bodyPage, appBar, context, (_) => _openTransactionModal(context));
   }
 }
 
