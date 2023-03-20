@@ -47,6 +47,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [];
+  final bool isIOS = Platform.isIOS;
   bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
   Widget _getIconButton(IconData icon, Function() fn) {
-    return Platform.isIOS
+    return isIOS
         ? GestureDetector(onTap: fn, child: Icon(icon))
         : IconButton(icon: Icon(icon), onPressed: fn);
   }
@@ -99,8 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
-    final chartList = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+    final iconList = isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList = isIOS ? CupertinoIcons.refresh : Icons.show_chart;
 
     final actions = <Widget>[
       if (isLandscape)
@@ -109,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _showChart = !_showChart;
           });
         }),
-      _getIconButton(Platform.isIOS ? CupertinoIcons.add : Icons.add,
+      _getIconButton(isIOS ? CupertinoIcons.add : Icons.add,
           () => _openTransactionModal(context)),
     ];
 
