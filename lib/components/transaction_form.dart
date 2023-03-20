@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_finances_control/components/adaptative_button.dart';
+import 'package:project_finances_control/components/adaptative_date_picker.dart';
 import 'package:project_finances_control/components/adaptative_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
@@ -65,24 +66,11 @@ class _TransactionFormState extends State<TransactionForm> {
                 _valueController,
                 const TextInputType.numberWithOptions(decimal: true),
                 (_) => _submitForm),
-            SizedBox(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                        _selectedDate == null
-                            ? 'Nenhuma data selecionada por padrão'
-                            : DateFormat('dd/MM/y').format(_selectedDate!),
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                  TextButton(
-                      onPressed: _showDatePicker,
-                      child: const Text('Selecionar Data',
-                          style: TextStyle(fontWeight: FontWeight.bold)))
-                ],
-              ),
-            ),
+            AdaptativeDatePicker(_selectedDate, (newDate) {
+              setState(() {
+                _selectedDate = newDate;
+              });
+            }),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

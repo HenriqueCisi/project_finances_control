@@ -14,11 +14,12 @@ class AdaptativeButton extends StatelessWidget {
         ? CupertinoButton(
             color: Theme.of(context).colorScheme.primary,
             padding: const EdgeInsets.symmetric(horizontal: 20),
+            onPressed: onPressed,
             child: Text(label),
-            onPressed: onPressed
             )
         : ElevatedButton(
-            child: Text(label),
-            onPressed: onPressed);
+            onPressed: onPressed,
+            child: Text(label)
+            );
   }
 }
