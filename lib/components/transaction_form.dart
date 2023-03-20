@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_finances_control/components/adaptative_button.dart';
+import 'package:project_finances_control/components/adaptative_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) addTransaction;
@@ -51,23 +53,18 @@ class _TransactionFormState extends State<TransactionForm> {
         elevation: 5,
         child: Padding(
           padding: EdgeInsets.only(
-            top: 10,
-            left: 10,
-            right: 10,
-            bottom: 10 + MediaQuery.of(context).viewInsets.bottom
-          ),
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: 10 + MediaQuery.of(context).viewInsets.bottom),
           child: Column(children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Título'),
-              controller: _titleController,
-              onSubmitted: (_) => {_submitForm()},
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Valor (R\$)'),
-              controller: _valueController,
-              onSubmitted: (_) => {_submitForm()},
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            ),
+            AdaptativeTextField('Título', _titleController, TextInputType.text,
+                (_) => _submitForm),
+            AdaptativeTextField(
+                'Valor (R\$)',
+                _valueController,
+                const TextInputType.numberWithOptions(decimal: true),
+                (_) => _submitForm),
             SizedBox(
               height: 70,
               child: Row(
@@ -89,12 +86,7 @@ class _TransactionFormState extends State<TransactionForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
-                    onPressed: () {
-                      _submitForm();
-                    },
-                    child: const Text('Nova Transação',
-                        style: TextStyle(fontWeight: FontWeight.bold)))
+                AdaptativeButton('Nova Transação', _submitForm),
               ],
             )
           ]),
