@@ -46,54 +46,59 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(children: [
-          TextField(
-            decoration: const InputDecoration(labelText: 'Título'),
-            controller: _titleController,
-            onSubmitted: (_) => {_submitForm()},
-            autofocus: true,
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: 10 + MediaQuery.of(context).viewInsets.bottom
           ),
-          TextField(
-            decoration: const InputDecoration(labelText: 'Valor (R\$)'),
-            controller: _valueController,
-            onSubmitted: (_) => {_submitForm()},
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            autofocus: true,
-          ),
-          SizedBox(
-            height: 70,
-            child: Row(
+          child: Column(children: [
+            TextField(
+              decoration: const InputDecoration(labelText: 'Título'),
+              controller: _titleController,
+              onSubmitted: (_) => {_submitForm()},
+            ),
+            TextField(
+              decoration: const InputDecoration(labelText: 'Valor (R\$)'),
+              controller: _valueController,
+              onSubmitted: (_) => {_submitForm()},
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            ),
+            SizedBox(
+              height: 70,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                        _selectedDate == null
+                            ? 'Nenhuma data selecionada por padrão'
+                            : DateFormat('dd/MM/y').format(_selectedDate!),
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  TextButton(
+                      onPressed: _showDatePicker,
+                      child: const Text('Selecionar Data',
+                          style: TextStyle(fontWeight: FontWeight.bold)))
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Expanded(
-                  child: Text(
-                      _selectedDate == null
-                          ? 'Nenhuma data selecionada por padrão'
-                          : DateFormat('dd/MM/y').format(_selectedDate!),
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                ),
-                TextButton(
-                    onPressed: _showDatePicker,
-                    child: const Text('Selecionar Data',
+                ElevatedButton(
+                    onPressed: () {
+                      _submitForm();
+                    },
+                    child: const Text('Nova Transação',
                         style: TextStyle(fontWeight: FontWeight.bold)))
               ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    _submitForm();
-                  },
-                  child: const Text('Nova Transação',
-                      style: TextStyle(fontWeight: FontWeight.bold)))
-            ],
-          )
-        ]),
+            )
+          ]),
+        ),
       ),
     );
   }
