@@ -5,7 +5,7 @@ import 'package:project_finances_control/components/adaptative_date_picker.dart'
 import 'package:project_finances_control/components/adaptative_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double, DateTime) addTransaction;
+  final void Function(String, double, DateTime?) addTransaction;
 
   const TransactionForm(this.addTransaction, {super.key});
 
@@ -21,30 +21,13 @@ class _TransactionFormState extends State<TransactionForm> {
   _submitForm() {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text.toString()) ?? 0;
-    final date = _selectedDate!;
+    final DateTime? date = _selectedDate;
 
     if (title.isEmpty || value <= 0) {
       return;
     }
 
     widget.addTransaction(title, value, date);
-  }
-
-  _showDatePicker() {
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2023),
-            lastDate: DateTime.now())
-        .then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
   }
 
   @override

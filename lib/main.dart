@@ -64,12 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  void _addNewTransaction(String title, double value, DateTime date) {
+  void _addNewTransaction(String title, double value, DateTime? date) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: date);
+        date: date ?? DateTime.now());
 
     setState(() {
       _transactions.add(newTransaction);
