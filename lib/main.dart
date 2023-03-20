@@ -44,10 +44,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7))) ? true : false ;
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)))
+          ? true
+          : false;
     }).toList();
   }
 
@@ -64,8 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: date
-        );
+        date: date);
 
     setState(() {
       _transactions.add(newTransaction);
@@ -74,31 +76,57 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
-    void _deleteTransaction(String id) {
+  void _deleteTransaction(String id) {
     setState(() {
       _transactions.removeWhere((tr) {
-       return tr.id == id;
+        return tr.id == id;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+            onPressed: () => _openTransactionModal(context),
+            icon: const Icon(Icons.add))
+      ],
+    );
+
+    final availabeHeigth = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-              onPressed: () => _openTransactionModal(context),
-              icon: const Icon(Icons.add))
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _deleteTransaction),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Exibir gráfico'),
+                Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    }),
+              ],
+            ),
+            
+            if (_showChart)
+              SizedBox(
+                  height: availabeHeigth * 0.2,
+                  child: Chart(_recentTransactions)),
+            if (!_showChart)
+              SizedBox(
+                  height: availabeHeigth * 0.8,
+                  child: TransactionList(_transactions, _deleteTransaction)),
           ],
         ),
       ),
