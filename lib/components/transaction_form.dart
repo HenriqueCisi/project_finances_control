@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:project_finances_control/components/adaptative_button.dart';
 import 'package:project_finances_control/components/adaptative_date_picker.dart';
 import 'package:project_finances_control/components/adaptative_text_field.dart';
